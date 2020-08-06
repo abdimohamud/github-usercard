@@ -1,8 +1,15 @@
-/*
+/* 
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
-*/
+*/ //added it to script
+const axios = require('axios');
+ axios.get('https://api.github.com/users/abdimohamud')
+  .then(function (response) {
+    entryPoint.appendChild(githubMaker(response.data))  
+  })
+
+  
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -10,12 +17,16 @@
     data in order to use it to build your component function
 
     Skip to STEP 3.
-*/
-
+// const myGit = response.data.message
+//     myGit.forEach(user => {
+//        const cards = githubMaker(myGit)
+//        entryPoint.appendChild(cards)
+//      })
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -58,3 +69,52 @@ const followersArray = [];
     luishrd
     bigknell
 */
+const entryPoint = document.querySelector('.cards')
+
+function githubMaker (objectData) {
+  const card = document.createElement('div')
+  const cardinfo = document.createElement('div')
+  const avatar = document.createElement('img')
+  const name = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const githubURL = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.appendChild(avatar)
+  card.appendChild(cardinfo)
+  cardinfo.appendChild(name)
+  cardinfo.appendChild(username)
+  cardinfo.appendChild(location)
+  cardinfo.appendChild(profile)
+  profile.appendChild(githubURL)
+  cardinfo.appendChild(followers)
+  cardinfo.appendChild(following)
+  cardinfo.appendChild(bio)
+  
+
+  card.className = "card"
+  cardinfo.className = "card-info"
+  name.className = "name"
+  username.className = "username"
+
+  // avatar.src = objectData.avatar_url
+  avatar.setAttribute("src", objectData.avatar_url)
+  name.textContent = objectData.name
+  username.textContent = objectData.Login
+  location.textContent = `Location: ${objectData.location}`
+  profile.textContent = "Profile"
+  githubURL.setAttribute("href",objectData.html_url) 
+  followers.textContent = objectData.followers
+  following.textContent = objectData.following
+  bio.textContent = ` bio: ${objectData.bio}`
+
+
+
+  return card
+
+  }
+
